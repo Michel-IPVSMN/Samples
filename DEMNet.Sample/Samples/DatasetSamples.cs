@@ -52,6 +52,7 @@ namespace SampleApp
         {
             try
             {
+                TestNewDataset();
 
 
                 _logger.LogInformation("GenerateReportAsString() will generate a report of all local datasets.");
@@ -69,7 +70,7 @@ namespace SampleApp
                 GeoPoint geoPoint = new GeoPoint(45.179337, 5.721421);
                 _logger.LogInformation($"Getting raster file for dataset at location {geoPoint}");
 
-                foreach (var dataset in DEMDataSet.RegisteredNonSingleFileDatasets)
+                foreach (var dataset in DEMDataSet.RegisteredNonLocalDatasets)
                 {
                     _logger.LogInformation($"{dataset.Name}:");
 
@@ -104,7 +105,11 @@ namespace SampleApp
         }
 
 
-
+        public void TestNewDataset()
+        {
+            var dataset = DEMDataSet.RegisteredDatasets.First(d => d.FileFormat.Type == DEMFileType.ASCIIGrid);
+            _rasterService.GenerateDirectoryMetadata(dataset, true);
+        }
 
     }
 }

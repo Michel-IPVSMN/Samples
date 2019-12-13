@@ -101,6 +101,13 @@ namespace SampleApp
             {
                 rasterService.SetLocalDirectory(DATA_FILES_PATH);
             }
+            using (_logger.BeginScope($"Running {nameof(DatasetSamples)}.."))
+            {
+                datasetSamples.Run();
+                _logger.LogInformation($"Sample {datasetSamples.GetType().Name} done. Press any key to run the next sample...");
+                if (pauseAfterEachSample) Console.ReadLine();
+                if (cancellationToken.IsCancellationRequested) return Task.FromCanceled(cancellationToken);
+            }
             using (_logger.BeginScope($"Running {nameof(AerialGpxSample)}.."))
             {
                 aerialGpxSample.Run(DEMDataSet.SRTM_GL3, DEMDataSet.SRTM_GL3);
@@ -169,13 +176,7 @@ namespace SampleApp
                 if (cancellationToken.IsCancellationRequested) return Task.FromCanceled(cancellationToken);
             }
 
-            using (_logger.BeginScope($"Running {nameof(DatasetSamples)}.."))
-            {
-                datasetSamples.Run();
-                _logger.LogInformation($"Sample {datasetSamples.GetType().Name} done. Press any key to run the next sample...");
-                if (pauseAfterEachSample) Console.ReadLine();
-                if (cancellationToken.IsCancellationRequested) return Task.FromCanceled(cancellationToken);
-            }
+           
 
 
             //using (_logger.BeginScope($"Running {nameof(DownloaderSample)}.."))
