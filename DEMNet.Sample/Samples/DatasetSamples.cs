@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using DEM.Net.Core;
+using DEM.Net.Core.Datasets;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
@@ -107,8 +108,28 @@ namespace SampleApp
 
         public void TestNewDataset()
         {
-            var dataset = DEMDataSet.RegisteredDatasets.First(d => d.FileFormat.Type == DEMFileType.ASCIIGrid);
-            _rasterService.GenerateDirectoryMetadata(dataset, true);
+            var datasetTEST = new DEMDataSet()
+            {
+                Name = "ASCII_GRID_TEST",
+                Description = "ASCII_GRID_TEST",
+                PublicUrl = null,
+                DataSource = new LocalFileSystem(localDirectory: @"D:\TMP\ELEVATION_DO_NOT_DELETE\TEST"),
+                FileFormat = new DEMFileDefinition("ASCIIGrid", DEMFileType.ASCIIGrid, ".asc", DEMFileRegistrationMode.Grid),
+                ResolutionMeters = 5,
+                Attribution = new Attribution()
+            };
+            _rasterService.GenerateDirectoryMetadata(datasetTEST, true);
+            var datasetPROD = new DEMDataSet()
+            {
+                Name = "ASCII_GRID",
+                Description = "ASCII_GRID",
+                PublicUrl = null,
+                DataSource = new LocalFileSystem(localDirectory: @"D:\TMP\ELEVATION_DO_NOT_DELETE\IGN RGE ALTI 5m"),
+                FileFormat = new DEMFileDefinition("ASCIIGrid", DEMFileType.ASCIIGrid, ".asc", DEMFileRegistrationMode.Grid),
+                ResolutionMeters = 5,
+                Attribution = new Attribution()
+            };
+            _rasterService.GenerateDirectoryMetadata(datasetPROD, true);
         }
 
     }
