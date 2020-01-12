@@ -272,9 +272,18 @@ namespace SampleApp
                 node = CreateAnimationFromGpx("GPX x500", node, pointsGpx, 500f);
 
 
+                foreach(var buffer in balloon.LogicalBuffers)
+                {
+                    var destBuffer = model.CreateBuffer(buffer.Content.Length);
+                    
+
+                }
                 var sceneBuilderBalloon = balloon.DefaultScene.ToSceneBuilder();
                 
                 var sceneBuilderTerrain = model.DefaultScene.ToSceneBuilder();
+                
+
+
                 //sceneBuilderBalloon.
 
 
