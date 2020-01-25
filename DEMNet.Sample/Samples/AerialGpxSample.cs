@@ -267,17 +267,12 @@ namespace SampleApp
 
                 var node = model.LogicalNodes.First();
                 pointsGpx = pointsGpx.ReprojectGeodeticToCartesian().ZScale(Z_FACTOR);
-                // animations
-                node = CreateAnimationFromGpx("GPX", node, pointsGpx, 1f);
-                node = CreateAnimationFromGpx("GPX x500", node, pointsGpx, 500f);
+                //// animations
+                //node = CreateAnimationFromGpx("GPX", node, pointsGpx, 1f);
+                //node = CreateAnimationFromGpx("GPX x500", node, pointsGpx, 500f);
 
-
-                foreach(var buffer in balloon.LogicalBuffers)
-                {
-                    var destBuffer = model.CreateBuffer(buffer.Content.Length);
-                    
-
-                }
+                balloon.MergeTo(model);
+               
                 var sceneBuilderBalloon = balloon.DefaultScene.ToSceneBuilder();
                 
                 var sceneBuilderTerrain = model.DefaultScene.ToSceneBuilder();
@@ -296,6 +291,7 @@ namespace SampleApp
             }
 
         }
+     
 
         private Node CreateAnimationFromGpx(string name, Node node, IEnumerable<GpxTrackPoint> points, float timeFactor)
         {
